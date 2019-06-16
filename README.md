@@ -4,4 +4,4 @@ First, pull the repo :
 git pull https://github.com/enomarin/cali-arbre.git
 ```
 
-Launch the html page index.html
+Launch the html page index.html and talk !

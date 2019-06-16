@@ -22,6 +22,7 @@
       myRec.start(); // start engine
       myRec.onResult = parseResult;
     }
+    let letter = new Letter
 
     function draw() {
 
@@ -42,7 +43,6 @@
       } else {
         y = yOrg;
         drawWord(mostrecentword, x, y);
-        index += 1;
       }
 
       let e = {
@@ -53,11 +53,21 @@
     }
 
     function drawWord(sentence, x, y) {
-      push();
-      translate(x, y);
-      rotate(Math.PI / 2);
-      text(sentence, 0, 0);
-      pop();
+
+    }
+    class Letter {
+      constructor(_char, _x, _y) {
+        this.x = _x;
+        this.y = _y;
+        this.char = _char;
+      }
+      display() {
+        push();
+        translate(this.x, this.y);
+        rotate(Math.PI / 2);
+        text(sentence, 0, 0);
+        pop();
+      }
     }
   </script>
 </head>
