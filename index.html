@@ -1,0 +1,68 @@
+<html>
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/addons/p5.dom.js"></script>
+  <script src="./lib/p5.speech.js"></script>
+  <script>
+    var myRec = new p5.SpeechRec('fr-FR', parseResult); // new P5.SpeechRec object
+    myRec.continuous = true; // do continuous recognition
+    myRec.interimResults = false; // allow partial recognition (faster, less accurate)
+    let nodes = [];
+    let index = 0;
+    let xOrg, yOrg;
+
+    function setup() {
+      // graphics stuff:
+      createCanvas(800, 600);
+      xOrg = width / 2;
+      yOrg = 0;
+      background(255, 255, 255);
+      fill(0, 0, 0, 255);
+      myRec.start(); // start engine
+      myRec.onResult = parseResult;
+    }
+
+    function draw() {
+
+    }
+
+    function parseResult() {
+      // recognition system will often append words into phrases.
+      // so hack here is to only use the last word:
+      var mostrecentword = myRec.resultString;
+      console.log(mostrecentword);
+      console.log(textWidth(mostrecentword));
+      let x = xOrg;
+      let y;
+      if (nodes.length > 0) {
+        y = nodes[index].y + textWidth(mostrecentword);
+        drawWord(mostrecentword, x, nodes[index].y);
+        index += 1;
+      } else {
+        y = yOrg;
+        drawWord(mostrecentword, x, y);
+        index += 1;
+      }
+
+      let e = {
+        'x': x,
+        'y': y
+      };
+      nodes.push(e);
+    }
+
+    function drawWord(sentence, x, y) {
+      push();
+      translate(x, y);
+      rotate(Math.PI / 2);
+      text(sentence, 0, 0);
+      pop();
+    }
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>
